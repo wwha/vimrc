@@ -1,13 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       Amir Salihefendic — @amix3k
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
+" Fork from  https://github.com/amix/vimrc
 "
 " Sections:
 "    -> General
@@ -23,6 +15,7 @@
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
+"    -> Custome functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -274,17 +267,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+nmap <leader>j mz:m+<cr>`z
+nmap <leader>k mz:m-2<cr>`z
+vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -382,3 +368,38 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Custome functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Functions for creating python scripts title
+func Setpytitle()
+call setline(1, "\#!/usr/bin/python")
+call setline(2, "\# -*- encoding=utf8 -*-")
+call setline(3, "\"\"\"")
+call setline(4, "\# @Created Time : ".strftime("%m-%d-%Y"))
+call setline(5, "\# @Description : ")
+call setline(6, "\"\"\"")
+normal G
+normal o
+normal o
+endfunc
+autocmd bufnewfile *.py call Setpytitle()
+
+" Functions for createing c code title
+func Setctitle()
+call setline(1, "/* main.c */")
+call setline(2, "/* copyright/licensing */")
+call setline(3, "/* includes */")
+call setline(4, "/* defines */")
+call setline(5, "/* external declarations */")
+call setline(6, "/* typedefs */")
+call setline(7, "/* global variable declarations */")
+call setline(8, "/* function prototypes */")
+call setline(9, "#include<stdio.h>")
+call setline(10, "\int main(int argc, char *argv[]) {")
+call setline(11,"    return 0;")
+call setline(12, "\}")
+normal G
+normal o
+endfunc
+autocmd bufnewfile *.c call Setctitle()
