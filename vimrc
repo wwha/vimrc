@@ -269,8 +269,8 @@ map 0 ^
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <leader>j mz:m+<cr>`z
 nmap <leader>k mz:m-2<cr>`z
-vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
-vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -372,7 +372,7 @@ endfunction
 " => Custome functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions for creating python scripts title
-func Setpytitle()
+func SetPyTitle()
 call setline(1, "\#!/usr/bin/python")
 call setline(2, "\# -*- encoding=utf8 -*-")
 call setline(3, "\"\"\"")
@@ -383,23 +383,36 @@ normal G
 normal o
 normal o
 endfunc
-autocmd bufnewfile *.py call Setpytitle()
+autocmd bufnewfile *.py call SetPyTitle()
 
 " Functions for createing c code title
-func Setctitle()
-call setline(1, "/* main.c */")
+func SetCTitle()
+call setline(1, "/* -*- encoding=utf8 -*-*/")
 call setline(2, "/* copyright/licensing */")
-call setline(3, "/* includes */")
-call setline(4, "/* defines */")
-call setline(5, "/* external declarations */")
-call setline(6, "/* typedefs */")
-call setline(7, "/* global variable declarations */")
-call setline(8, "/* function prototypes */")
-call setline(9, "#include<stdio.h>")
-call setline(10, "\int main(int argc, char *argv[]) {")
-call setline(11,"    return 0;")
-call setline(12, "\}")
+call setline(3, "/* @Created Time : ".strftime("%m-%d-%Y")." */")
+call setline(4, "/* includes */")
+call setline(5, "/* defines */")
+call setline(6, "/* external declarations */")
+call setline(7, "/* typedefs */")
+call setline(8, "/* global variable declarations */")
+call setline(9, "/* function prototypes */")
+call setline(10, "#include<stdio.h>")
+call setline(11, "\int main(int argc, char *argv[]) {")
+call setline(12,"    return 0;")
+call setline(13, "\}")
 normal G
 normal o
 endfunc
-autocmd bufnewfile *.c call Setctitle()
+autocmd bufnewfile *.c call SetCTitle()
+
+" Functions for creating shell scripts title
+func SetShTitle()
+call setline(1, "\#!/bin/zsh")
+call setline(2, "\# -*- encoding=utf8 -*-")
+call setline(4, "\# @Created Time : ".strftime("%m-%d-%Y"))
+call setline(5, "\# @Description : ")
+normal G
+normal o
+normal o
+endfunc
+autocmd bufnewfile *.sh call SetShTitle()
